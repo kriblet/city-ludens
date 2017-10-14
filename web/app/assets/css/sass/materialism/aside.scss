@@ -1,0 +1,15 @@
+$break-small: 320px;
+$break-large: 1200px;
+$break-xlarge: 1900px;
+
+.aside-block{
+  @media screen and (max-width: $break-small) {
+    width: 300px;
+  }
+  @media screen and (min-width: $break-large) {
+    width: 980px;
+  }
+  @media screen and (min-width: $break-xlarge) {
+    width: 1620px;
+  }
+}

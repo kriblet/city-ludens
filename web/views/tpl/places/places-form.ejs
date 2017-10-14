@@ -1,0 +1,114 @@
+<div class="aside bs-docs-aside aside-block" tabindex="-1" role="dialog">
+  <div class="close">
+    <div class="btn btn-round btn-danger" ng-click="$hide()"><i class="md md-close"></i></div>
+  </div>
+  <div class="aside-dialog">
+    <div class="aside-body bs-sidebar">
+
+      <form class="form-floating" ng-submit="saveItem(item)">
+        <fieldset>
+          <legend><span ng-bind-html="createIcon(item.place.placeType)"></span> {{cmd}} {{settings.singular}}</legend>
+
+          <div class="col-md-6">
+            <div class="form-group filled" ng-init="placeTypes=['INTEREST', 'SERVICE', 'EVENT']">
+              <label class="control-label">Place type</label>
+                <ui-select ng-model="item.place.placeType"
+                           theme="select2"
+                           title="Choose a category"
+                           search-enabled="true" required
+                           ng-disabled="!item.editing"
+                >
+                    <ui-select-match placeholder="Pick a place type">{{$select.selected}}</ui-select-match>
+                    <ui-select-choices repeat="p in placeTypes | filter: $select.search">
+                        <div ng-bind-html="p | highlight: $select.search"></div>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+
+              <div class="form-group filled">
+                  <label class="control-label">Name</label>
+                  <input class="form-control" ng-model="item.item.name" required ng-disabled="!item.editing" />
+              </div>
+
+            <div class="form-group filled">
+              <label class="control-label">Category</label>
+              <div class="form-group">
+                <ui-select ng-model="selectedCategory"
+                           ng-change="getSubcategories(selectedCategory)"
+                           theme="select2"
+                           title="Choose a category"
+                           search-enabled="true" required
+                           ng-disabled="!item.editing"
+                >
+                  <ui-select-match placeholder="Pick a category">{{$select.selected.name}}</ui-select-match>
+                  <ui-select-choices repeat="item in categories | filter: $select.search">
+                    <div ng-bind-html="item.name | highlight: $select.search"></div>
+                  </ui-select-choices>
+                </ui-select>
+              </div>
+            </div>
+              <div class="form-group filled">
+                  <label class="control-label">Sub Category</label>
+                  <div class="form-group">
+                      <ui-select ng-model="selectedSubCategory"
+                                 ng-change="changedSubCategory(selectedSubCategory)"
+                                 theme="select2"
+                                 title="Choose a subCategory"
+                                 search-enabled="true" required
+                                 ng-disabled="!item.editing"
+                      >
+                          <ui-select-match placeholder="Pick a sub category">{{$select.selected.name}}</ui-select-match>
+                          <ui-select-choices repeat="item in subCategories | filter: $select.search">
+                              <div ng-bind-html="item.name | highlight: $select.search"></div>
+                          </ui-select-choices>
+                      </ui-select>
+                  </div>
+              </div>
+
+              <div class="form-group filled">
+                  <label class="control-label">Address</label>
+                  <input class="form-control" ng-model="item.place.address" required ng-disabled="!item.editing">
+              </div>
+
+            <div class="form-group filled">
+              <label class="control-label">Information</label>
+              <textarea class="form-control vertical" ng-model="item.item.information" ng-disabled="!item.editing" style="height: 100px;" required></textarea>
+            </div>
+
+
+            <div class="form-group">
+              <div class="pull-right">
+                <button class="btn btn-lg btn-success" ng-hide="!item.editing">Save</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-12 form-group col-md-6">
+            <div class="card bordered small">
+              <div class="card-content">
+                <form>
+                  <div class="row">
+                    <div class="col-md-10">
+                      <input class="form-control" placeholder="Search" ng-model="query">
+                    </div>
+                    <div class="col-md-2 no-p-l">
+                      <button type="button" class="btn btn-default fullwidth" ng-click="searchFor(query)">Search</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <div style="height:350px;" class="col-md-12">
+                <ui-gmap-google-map center="map.center"
+                                    zoom="map.zoom"
+                                    control="map.control" />
+              </div>
+              <div class="col-md-12">
+                <div class="alert alert-link bg-dark-grey">{{item.place.address || 'Right click to pick a location.'}}</div>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,184 @@
+<div class="dashboard grey lighten-3" ng-controller="bankRechargeController" ng-init="init();">
+  <div class="row no-gutter">
+    <div class="col-sm-12 col-md-12 col-lg-9" style="background:#F9F9F9;">
+      <div class="p-20 clearfix">
+        <div class="pull-right">
+          <a href="#/bank/transactions" class="btn btn-round-sm btn-link" bs-tooltip title="See Transactions"><i class="md md-list"></i></a>
+        </div>
+        <h4 class="grey-text">
+          <i class="md md-dashboard"></i>
+          <span class="hidden-xs">Recharge City Coins</span>
+        </h4>
+      </div>
+      <div class="p-20 no-p-t">
+
+        <div class="row">
+          <div class="col-md-2 col-sm-3 col-xs-6">
+            <div class="card card-flip">
+              <div class="card-image">
+                <img src="assets/img/coins/coin_1.png" />
+              </div>
+              <div class="card-action clearfix">
+                <h5><button ng-click="quantityCoins=500;rechargeCoins();" class="btn btn-default btn-block">Buy 500</button></h5>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-2 col-sm-3 col-xs-6">
+            <div class="card">
+              <div class="card-image">
+                <img src="assets/img/coins/coin_1_2.png" />
+              </div>
+              <div class="card-action clearfix">
+                <h5><button ng-click="quantityCoins=1000;rechargeCoins();" class="btn btn-default btn-block">Buy 1,000</button></h5>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-2 col-sm-3 col-xs-6">
+            <div class="card">
+              <div class="card-image">
+                <img src="assets/img/coins/coin_2.png" />
+              </div>
+              <div class="card-action clearfix">
+                <h5><button ng-click="quantityCoins=1500;rechargeCoins();" class="btn btn-info btn-block">Buy 1,500</button></h5>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-2 col-sm-3 col-xs-6">
+            <div class="card">
+              <div class="card-image">
+                <img src="assets/img/coins/coin_2_2.png" />
+              </div>
+              <div class="card-action clearfix">
+                <h5><button ng-click="quantityCoins=2000;rechargeCoins();" class="btn btn-primary btn-block">Buy 2,000</button></h5>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-2 col-sm-3 col-xs-6">
+            <div class="card">
+              <div class="card-image">
+                <img src="assets/img/coins/coin_3.png" />
+              </div>
+              <div class="card-action clearfix">
+                <h5><button ng-click="quantityCoins=4000;rechargeCoins();" class="btn btn-default btn-block">Buy 4,000</button></h5>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-2 col-sm-3 col-xs-6">
+            <div class="card">
+              <div class="card-image">
+                <img src="assets/img/coins/coin_3_2.png" />
+              </div>
+              <div class="card-action clearfix">
+                <h5><button ng-click="quantityCoins=5000;rechargeCoins();" class="btn btn-default btn-block">Buy 5,000</button></h5>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row gutter-14">
+
+          <div class="col-md-7">
+
+            <div class="panel panel-default left">
+              <div class="panel-heading">
+
+                <div class="pull-right">
+                  <a href="" class="btn btn-round-sm btn-link"
+                     bs-dropdown="dropdown"
+                     data-template="assets/tpl/partials/dropdown-list-example.html"
+                     data-animation="mat-grow-top-right">
+                    <i class="md md-more-vert"></i>
+                  </a>
+                </div>
+
+                <h2 class="panel-title grey-text">Get <strong>City Coins</strong>!</h2>
+                <div class="row">
+                  <div class="col-xs-12 col-md-8">
+                    <div class="form-group">
+                      <label for="inputCoins" class="control-label">How many City Coins?</label>
+                      <select class="form-control"  ng-model="quantityCoins">
+                        <option value="500">500</option>
+                        <option value="1000">1000</option>
+                        <option value="1500">1500</option>
+                        <option value="2000">2000</option>
+                        <option value="4000">4000</option>
+                        <option value="5000">5000</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-xs-12 col-md-4">
+                    <button class="btn btn-secondary" ng-click="rechargeCoins();">Recharge</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="col-md-5">
+
+            <div class="card">
+              <div class="card-header relative">
+                <div class="card-title">Latest recharges</div>
+                <div class="floating-actions">
+                  <a href="#/bank/transactions" type="button" class="btn btn-round btn-info" bs-tooltip title="View all"><span class="md md-chevron-right"></span></a>
+                </div>
+              </div>
+
+              <div class="list-group">
+                <a href class="list-group-item clearfix" ng-repeat="i in transactions | filter:{type:'RECHARGE'} | limitTo:3">
+                  <div class="list-group-item-heading" >{{i.coinCount|currency}}</div>
+                  <p class="list-group-item-text">{{i.createdAt.toString()}}</p>
+                </a>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="row gutter-14">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-header">
+                <div class="actions">
+                  <a href="" class="btn btn-link btn-icon"
+                     bs-dropdown="dropdown"
+                     data-template="assets/tpl/partials/dropdown-list-example.html"
+                     data-animation="mat-grow-top-right"
+                  ><i class="md md-more-vert"></i></a>
+                </div>
+                <div class="card-title">Latest Transactions</div>
+                <div class="small grey-text">Overview of the latest transactions on your account</div>
+              </div>
+
+              <div class="table-responsive">
+                <table class="table table-full table-full-small table-dashboard-widget-1">
+                  <thead>
+                  <tr>
+                    <th>Ammount</th>
+                    <th>Type</th>
+                    <th>Date</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr ng-repeat="t in transactions">
+                    <td>{{t.coinCount|currency}}</td>
+                    <td>{{t.type}}</td>
+                    <td>{{t.createdAt.toString()}}</td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="col-lg-3 col-md-12" ng-include="'/tpl/bank/overall'"></div>
+  </div>
+
+
+</div>

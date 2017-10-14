@@ -1,0 +1,51 @@
+<div class="dashboard grey lighten-3" ng-controller="bankTransactionsController" ng-init="init();">
+  <div class="row no-gutter">
+    <div class="col-sm-12 col-md-12 col-lg-9" style="background:#F9F9F9;">
+      <div class="row gutter-14">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header">
+              <div class="actions">
+                <a href="" class="btn btn-link btn-icon"
+                   bs-dropdown="dropdown"
+                   data-template="assets/tpl/partials/dropdown-list-example.html"
+                   data-animation="mat-grow-top-right"
+                ><i class="md md-more-vert"></i></a>
+              </div>
+              <div class="card-title">Account Transactions</div>
+              <div class="small grey-text">Overview of the transactions on your account</div>
+            </div>
+
+            <div class="table-responsive">
+              <table class="table table-full table-full-small table-dashboard-widget-1">
+                <thead>
+                <tr>
+                  <th>Ammount</th>
+                  <th>Type</th>
+                  <th>Date</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="t in transactions">
+                  <td>{{t.coinCount|currency}}</td>
+                  <td>{{t.type}}</td>
+                  <td>{{t.createdAt.toString()}}</td>
+                </tr>
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <td>Total Balance: {{balance()|currency}}</td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-12" ng-include="'/tpl/bank/overall'"></div>
+  </div>
+
+
+</div>
