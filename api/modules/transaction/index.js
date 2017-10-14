@@ -3,7 +3,7 @@
 module.exports = (service)=>{
     return {
         recharge: require(`${__dirname}/recharge`)(service),
-        transfer: null,
+        transfer: require(`${__dirname}/transfer`)(service),
         withdraw: null
     };
 

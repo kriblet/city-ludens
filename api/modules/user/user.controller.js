@@ -9,22 +9,19 @@ module.exports = (service)=>{
         event: 'user/data',
         worker: (self, args, ack)=> {
             let user = self.handshake.session.user;
-
+            console.log("user/data", user);
             let bank = service.models.mongodb.bank;
 
             bank.findOne({user: user._id}, {coinCount:1})
                 .then((userBank)=>{
-                    user.coinCount = 0;
-                    if (userBank){
-                        user.coinCount = userBank.coinCount;
-                    }
+                    console.log("data user bank", userBank);
 
                     ack({
                         isValid: true,
                         data: {
-                            coinCount: user.coinCount,
+                            coinCount: userBank ? userBank.coinCount : 0,
                             local: {
-                                email: user.local.email
+                                email: user.local ? user.local.email : null
                             },
                             twitter: {
                                 email: user.twitter ? user.twitter.email : null
@@ -39,6 +36,7 @@ module.exports = (service)=>{
                     })
                 })
                 .catch((err)=>{
+                console.log("ERROR", err);
                     ack({
                         isValid: false,
                         error: err

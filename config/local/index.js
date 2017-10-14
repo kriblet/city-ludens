@@ -28,7 +28,8 @@ module.exports = {
         controllers: [
             `${__dirname}/../../api/modules/bank`,
             `${__dirname}/../../api/modules/user`,
-            `${__dirname}/../../api/modules/place`
+            `${__dirname}/../../api/modules/place`,
+            `${__dirname}/../../api/modules/common`
         ]
     },
     // this users engine contains middleware & login / register / delete restful and socket methods.

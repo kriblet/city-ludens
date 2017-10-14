@@ -3,7 +3,7 @@
 ((angular)=>{
     angular.module('bank.module')
         .controller('bankRechargeController',['$scope', '$common', function($scope, $common){
-            $scope.quantityCoins = 500;
+            $scope.quantityCoins = 50;
 
             $scope.rechargeCoins = rechargeCoins;
             $scope.init = init;

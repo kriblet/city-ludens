@@ -1,0 +1,82 @@
+<div class="dashboard grey lighten-3" ng-controller="bankTransferController" ng-init="init();">
+  <div class="row no-gutter">
+    <div class="col-sm-12 col-md-12 col-lg-9" style="background:#F9F9F9;">
+      <div class="p-20 clearfix">
+        <div class="pull-right">
+          <a href="#/bank/transactions" class="btn btn-round-sm btn-link" bs-tooltip title="See Transactions"><i class="md md-list"></i></a>
+        </div>
+        <h4 class="grey-text">
+          <i class="md md-dashboard"></i>
+          <span class="hidden-xs">Transfer City Coins</span>
+        </h4>
+      </div>
+      <div class="p-20 no-p-t">
+        <div class="row gutter-14">
+
+          <div class="col-md-12">
+
+            <form ng-submit="transferCoins();" class="panel panel-default left">
+              <div class="panel-heading">
+                <h2 class="panel-title grey-text">Transfer <strong>City Coins</strong>!</h2>
+                <div class="row">
+                  <div class="col-xs-12 col-md-6">
+                    <div class="form-group">
+                      <label for="inputCoins" class="control-label">How many City Coins?</label>
+                      <input type="number" name="inputCoins"
+                             ng-max="{{user.coinCount}}"
+                             class="form-control"
+                             ng-model="quantityCoins" required />
+                    </div>
+                  </div>
+                  <div class="col-xs-12 col-md-6 form-group">
+                    <div class="form-group">
+                      <label for="targetType" class="control-label">Target type</label>
+                        <ui-select ng-model="currentTargetType"
+                                   ng-change="setCurrentTargetType(currentTargetType)"
+                                  theme="select2"
+                                  title="Choose a Target Type"
+                                  search-enabled="true" required
+                                  ng-init="targetType = ['user','interest']"
+                        >
+                          <ui-select-match placeholder="Pick a Target Type">{{$select.selected}}</ui-select-match>
+                          <ui-select-choices repeat="p in targetType | filter: $select.search">
+                            <div ng-bind-html="p | highlight: $select.search"></div>
+                          </ui-select-choices>
+                        </ui-select>
+                    </div>
+                  </div>
+                  <div class="col-xs-12 col-md-10 form-group">
+                    <label for="target" class="control-label">Target</label>
+                    <ui-select ng-model="currentTarget"
+                               theme="select2"
+                               title="Choose a Target"
+                               search-enabled="true" required
+                    >
+                      <ui-select-match placeholder="Pick a Target">{{ getTargetName($select) }}</ui-select-match>
+                      <ui-select-choices repeat="p in targets | filter: $select.search"
+                                         refresh="refreshTargets($select.search)"
+                                         refresh-delay="500">
+                        <div ng-bind-html="p.name || p.local.email || p.google.email || p.facebook.email || p.twitter.email | highlight: $select.search"></div>
+                      </ui-select-choices>
+                    </ui-select>
+                  </div>
+                  <div class="col-xs-12 col-md-2">
+                    <button class="btn btn-secondary">Transfer</button>
+                  </div>
+                </div>
+              </div>
+            </form>
+
+          </div>
+
+
+        </div>
+
+      </div>
+    </div>
+
+    <div class="col-lg-3 col-md-12" ng-include="'/tpl/bank/overall'"></div>
+  </div>
+
+
+</div>

@@ -37,43 +37,28 @@ module.exports = (service)=>{
                                     return reject(err);
                                 }
 
-                                bank.findOne({user: user._id})
+                                let utils = require(`${__dirname}/../utils`);
+                                utils.findOrCreate(bank, {user: user._id})
                                     .then((userBank)=>{
-                                        if (!userBank){
-                                            userBank = new bank({
-                                                user: user._id,
-                                                coins: coins,
-                                                coinCount: coins.length
-                                            });
-                                            userBank.save((err)=>{
+                                        userBank.update({$inc: { coinCount: coins.length }, $pushAll: {coins: coins}},{ upsert:true },function(err){
+                                            if(err){
+                                                coin.remove({_id: coins});
+                                                newTransaction.remove();
+                                                return reject(err);
+                                            }
+                                            coin.update({_id: coins}, {prevTransaction: newTransaction._id}, function(err){
                                                 if (err){
-                                                    coin.remove({_id: coins});
-                                                    newTransaction.remove();
-                                                    return reject(err);
+                                                    return userBank.update({$dec: { coinCount: coins.length }, $pullAll: {coins: coins}},{ upsert:true },function(err){
+                                                        coin.remove({_id: coins});
+                                                        newTransaction.remove();
+                                                        reject(err);
+                                                    });
                                                 }
+
                                                 resolve(newTransaction._id);
-                                            })
-                                        }else{
-                                            userBank.update({$inc: { coinCount: coins.length }, $pushAll: {coins: coins}},{ upsert:true },function(err){
-                                                if(err){
-                                                    coin.remove({_id: coins});
-                                                    newTransaction.remove();
-                                                    return reject(err);
-                                                }
-                                                coin.update({_id: coins}, {prevTransaction: newTransaction._id}, function(err){
-                                                    if (err){
-                                                        return userBank.update({$dec: { coinCount: coins.length }, $pullAll: {coins: coins}},{ upsert:true },function(err){
-                                                            coin.remove({_id: coins});
-                                                            newTransaction.remove();
-                                                            reject(err);
-                                                        });
-                                                    }
-
-                                                    resolve(newTransaction._id);
-                                                });
-
                                             });
-                                        }
+
+                                        });
                                     })
                                     .catch((err)=>{
                                         coin.remove({_id: coins});
