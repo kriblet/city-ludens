@@ -75,6 +75,7 @@ app.controller('MainController',
 
       $common.$dataService.emit('user/data')
           .then(function(res){
+            console.log('USER DATA', res);
               if (res.isValid){
                   $scope.user = res.data;
                   $common.$rootScope.user = $scope.user;

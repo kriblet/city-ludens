@@ -8,13 +8,13 @@ module.exports = {
     allowedDomains: ['localhost','c9users.io','desktop-ip4vcb7'],
     host: {
         webServerRoute: '',
-        port: 80,
+        port: 8080,
         crossOrigin: true
     },
     db: {
         mongodb: {
             engine: 'mongodb',
-            host: 'localhost',
+            host: '45.55.56.191',
             port: 27017,
             database: 'test_ludens'
         }
