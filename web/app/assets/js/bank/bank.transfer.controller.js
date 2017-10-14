@@ -13,8 +13,10 @@
                 if (!target.selected){
                     return target.placeholder;
                 }
-                let name = 'Target';
-                if (target.selected.local && target.selected.local.email){
+                let name = '-';
+                if (target.selected.name) {
+                    name = target.selected.name;
+                }else if (target.selected.local && target.selected.local.email){
                     name = target.selected.local.email;
                 }else if(target.selected.facebook && target.selected.facebook.email){
                     name = target.selected.facebook.email;
