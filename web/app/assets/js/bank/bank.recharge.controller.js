@@ -16,34 +16,40 @@
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, I Want those coins'
-                }).then(function () {
-                    $common.$dataService.emit('bank/recharge', { quantityCoins: $scope.quantityCoins })
-                        .then(function(res){
-                            if (res.isValid){
-                                $scope.$broadcast('bank/recharge', $scope.quantityCoins);
-                                $scope.$emit('bank/recharge', $scope.quantityCoins);
-                                $scope.transactions.push({_id: res.data, createdAt: Date.now(), coinCount: $scope.quantityCoins, type: 'RECHARGE'});
-                                swal(
-                                    'Great!',
-                                    $scope.quantityCoins + ' City Coins added to your account',
-                                    'success'
-                                )
-                            }
-                        })
-                        .catch(function(err){
-                            console.error(err);
-                            swal(
-                                'Oops something bad happened',
-                                'Try again later',
-                                'error'
-                            )
+                    confirmButtonText: 'Yes, I Want those coins',
+                    preConfirm: function () {
+                        return new Promise(function (resolve, reject) {
+                            $common.$dataService.emit('bank/recharge', { quantityCoins: $scope.quantityCoins })
+                                .then(function(res){
+                                    if (res.isValid){
+                                        $scope.$broadcast('bank/recharge', $scope.quantityCoins);
+                                        $scope.$emit('bank/recharge', $scope.quantityCoins);
+                                        $scope.transactions.push({_id: res.data, createdAt: Date.now(), coinCount: $scope.quantityCoins, type: 'RECHARGE'});
+                                        resolve()
+                                    }else{
+                                        reject(res.error);
+                                    }
+                                })
+                                .catch(function(err){
+                                    console.error(err);
+                                    reject(err);
+                                });
                         });
-
-                }).catch(function(){
+                    },
+                    allowOutsideClick: false,
+                    showLoaderOnConfirm: true,
+                    closeOnConfirm: false
+                }).then(function () {
                     swal(
-                        'Cancelled',
-                        'Operation has been cancelled',
+                        'Great!',
+                        $scope.quantityCoins + ' City Coins added to your account',
+                        'success'
+                    );
+
+                }).catch(function(err){
+                    swal(
+                        'Oops something bad happened',
+                        'Try again later',
                         'error'
                     )
                 });

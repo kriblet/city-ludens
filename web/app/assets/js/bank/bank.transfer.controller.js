@@ -94,7 +94,15 @@
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, I Want to Transfer'
+                    confirmButtonText: 'Yes, I Want to Transfer',
+                    preConfirm: function () {
+                        return new Promise(function (resolve, reject) {
+                            resolve();
+                        });
+                    },
+                    allowOutsideClick: false,
+                    showLoaderOnConfirm: true,
+                    closeOnConfirm: false
                 }).then(function () {
                     swal(
                         'Great',
