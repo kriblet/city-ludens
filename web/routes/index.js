@@ -60,6 +60,9 @@ module.exports = function(app, passport) {
         failureFlash : true // allow flash messages
     }));
 
+    app.post('/api/login', passport.authenticate('token'));
+
+
     // SIGNUP =================================
     // show the signup form
     app.get('/signup', function(req, res) {

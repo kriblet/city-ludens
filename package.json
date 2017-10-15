@@ -1,9 +1,6 @@
 {
   "name": "hackathon-smart-cities-1",
   "version": "0.0.1",
-  "dependencies": {
-    "connect-mongo": "^2.0.0"
-  },
   "scripts": {
     "start": "sentinel start",
     "log": "sentinel logs",
