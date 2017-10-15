@@ -43,12 +43,19 @@ function configure(self){
     self.logger.info(`setting view engine`);
 
     self.app.set('view engine', 'ejs'); // set up ejs for templating
-    var session = require("express-session")({
-        secret: "my-secret",
+
+    let expressSession = require('express-session');
+    let MongoStore = require('connect-mongo')(expressSession);
+
+
+    let session = expressSession({
+        secret: "city-ludens-s7a8r6s78",
         resave: true,
-        saveUninitialized: true
+        saveUninitialized: true,
+        store: new MongoStore({mongooseConnection: self.connectors.connectors.mongodb.getConnection()})
     });
-    var sharedsession = require("express-socket.io-session");
+
+    let sharedsession = require("express-socket.io-session");
 
 // Use express-session middleware for express
     self.app.use(session);

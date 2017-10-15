@@ -53,7 +53,7 @@ app.controller('MainController',
   localStorageService.bind($scope, 'theme');
 
   var introductionAlert = $alert({
-    title: 'Welcome to Materialism',
+    title: 'Welcome to City Ludens',
     content: 'Stay a while and listen',
     placement: 'top',
     type: 'theme',

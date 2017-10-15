@@ -35,6 +35,7 @@ var arr = url.split("/");
                         headers['x-action'] = args.action;
                     }
 
+                    console.log("connecting realtime service to", socketUrl);
                     self.connection = io( {
                         url: args.url || socketUrl,
                         transportOptions: {

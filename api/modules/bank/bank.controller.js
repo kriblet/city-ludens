@@ -11,6 +11,7 @@ module.exports = (service)=>{
          */
         event: 'bank/recharge',
         worker: (self, args, ack)=> {
+            console.log("bank/recharge", args);
             if (!args.quantityCoins ){
                 return ack({
                     isValid: false,
